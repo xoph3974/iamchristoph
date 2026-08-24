@@ -12,7 +12,7 @@
   --blue-dark: #3d5a98;
   --text: #353738;
   --text-light: #6b7280;
-  --bg: #f6f8f9aa;
+  --bg: #f0f0f0aa;
   --white: #ffffff;
   --border: #e5e7eb;
   --card-bg: #f6f8f9;
@@ -20,6 +20,7 @@
   --body-font: 'Nunito', 'SF Pro Rounded', sans-serif;
   --max-width: 1280px;
   --section-gap: 80px;
+  --radius: 12px;
 }
 
 /* --- Reset & Base --- */
@@ -176,6 +177,7 @@ button.btn { border: none; }
 .projects-grid {
   max-width: var(--max-width);
   margin: 0 auto;
+  padding: 0 32px;
   display: flex;
   flex-direction: column;
   gap: 64px;
@@ -249,7 +251,6 @@ button.btn { border: none; }
 .contact-inner {
   max-width: 560px;
   margin: 0 auto;
-  text-align: center;
 }
 .contact-inner h2 {
   font-family: var(--heading-font);
@@ -419,13 +420,13 @@ footer a { color: var(--blue); }
 .section-label {
   display: inline-block;
   font-family: var(--heading-font);
-  font-size: 1.125rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.05em;
   line-height: 1.625;
   text-transform: uppercase;
   color: var(--blue);
-  margin-bottom: 16px;
+  margin-bottom: 36px;
   border-bottom: 3px solid var(--blue);
 }
 .case-section h2 {
@@ -452,6 +453,7 @@ footer a { color: var(--blue); }
 }
 .case-section ul, .case-section ol {
   margin: 0 0 16px 20px;
+  max-width: 960px;
   color: var(--text);
   font-size: 1rem;
   line-height: 1.5;
@@ -546,21 +548,31 @@ footer a { color: var(--blue); }
 
 
 /* --- Image layouts in case studies --- */
-.img-wide { 
-  width: calc(100% + 64px);
-  max-width: none;
-  margin: 0 -32px;
+img { max-width: 100%; }
+img.wide { 
   box-shadow: none; 
-}
-.img-full {
   width: 100vw;
-  margin: 0;
-  box-shadow: none;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  max-width: none; 
+  object-fit: cover;
+}
+img.shadow { box-shadow: 0 4px 24px rgba(0,0,0,0.2); }
+img.rounded {
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+img.border {
+  border: 2px solid var(--text-light);
 }
 img + .case-section {
   margin-top: var(--section-gap);
 }
-.img-grid img { box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08); }
+.two-col-text-img.img-first img { order: -1; }
+.two-col-text-img.img-first div { align-content: center; }
 .img-grid {
   display: grid;
   gap: 12px;
@@ -568,10 +580,10 @@ img + .case-section {
 }
 .img-grid-2 { grid-template-columns: 1fr 1fr; }
 .img-grid-3 { grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; }
-.img-noshadow { box-shadow: none !important; }
 .img-scrollable { 
   max-height: 300px;
   border-radius: 12px;
+  border: 2px solid var(--text-light);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   overflow-y: scroll;
 }
@@ -584,8 +596,7 @@ img + .case-section {
   margin: 32px 0 24px;
 }
 .two-col-text-img img {
-  border-radius: 12px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  overflow: hidden;
   width: 100%;
 }
 .two-col-text-img div{
@@ -599,6 +610,7 @@ img + .case-section {
 .two-col-text-img + .two-col-text-img, .img-grid + .two-col-text-img { margin-top: var(--section-gap)}
 .section-label + .two-col-text-img { margin-top: 16px; }
 
+
 /* --- Responsive --- */
 @media (max-width: 768px) {
   .hidden {
@@ -607,7 +619,7 @@ img + .case-section {
   .two-col-text-img {
     grid-template-columns: 1fr;
   }
-  .two-col-text-img.img-first img { order: -1; }
+  .two-col-text-img.img-first img { order: 2; }
 
   .hero { padding: 60px 20px 48px; }
   .projects-section { padding: 0 20px 60px; }
@@ -647,4 +659,126 @@ img + .case-section {
   .case-hero h1 { font-size: 1.8rem; }
   .stats-row { grid-template-columns: 1fr; }
   .nav-links a:not(.btn-outline) { display: none; }
+}
+
+
+/* ---------------------------------------------------------------
+   Zoom lightbox styles
+   Drop this file in and link it, then add class="zoom" to any <img>.
+   Selectors are scoped to img.zoom / .zoomjs-* on purpose so they
+   won't collide with existing rules elsewhere on the page.
+--------------------------------------------------------------- */
+
+img.zoom {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='23' fill='gray' fill-opacity='0.5'/%3E%3Ccircle cx='20' cy='20' r='9' fill='none' stroke='white' stroke-width='3'/%3E%3Cline x1='26' y1='26' x2='34' y2='34' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") 20 20, zoom-in;
+  transition: transform 0.2s ease;
+}
+img.zoom:hover {
+  transform: scale(1.03);
+}
+img.zoom:focus-visible {
+  outline: 2px solid #5ecfc0;
+  outline-offset: 2px;
+}
+
+div.zoomjs-overlay {
+  box-sizing: border-box;
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: rgba(4, 14, 14, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease;
+  z-index: 9999;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='23' fill='gray' fill-opacity='0.5'/%3E%3Ccircle cx='20' cy='20' r='9' fill='none' stroke='white' stroke-width='3'/%3E%3Cline x1='26' y1='26' x2='34' y2='34' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='16' y1='20' x2='24' y2='20' stroke='white' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E") 20 20, zoom-out;
+}
+div.zoomjs-overlay.zoomjs-open {
+  opacity: 1;
+  visibility: visible;
+}
+img.zoomjs-overlay-img {
+  box-sizing: border-box;
+  width: 90vw;
+  height: 90vh;
+  object-fit: contain;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  transform: scale(0.96);
+  transition: transform 0.25s ease;
+}
+div.zoomjs-overlay.zoomjs-open img.zoomjs-overlay-img {
+  transform: scale(1);
+}
+
+button.zoomjs-nav {
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: #eaf5f3;
+  font-family: inherit;
+  font-size: 1.7rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+button.zoomjs-nav:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+button.zoomjs-nav:focus-visible {
+  outline: 2px solid #5ecfc0;
+  outline-offset: 2px;
+}
+button.zoomjs-nav.zoomjs-prev { left: 16px; }
+button.zoomjs-nav.zoomjs-next { right: 16px; }
+
+div.zoomjs-counter {
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0;
+  border: none;
+  color: #8fb5af;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 480px) {
+  button.zoomjs-nav.zoomjs-prev,
+  button.zoomjs-nav.zoomjs-next {
+    width: 40px;
+    height: 40px;
+    font-size: 1.4rem;
+  }
+  button.zoomjs-nav.zoomjs-prev { left: 8px; }
+  button.zoomjs-nav.zoomjs-next { right: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  img.zoom,
+  div.zoomjs-overlay,
+  img.zoomjs-overlay-img {
+    transition: none;
+  }
 }
