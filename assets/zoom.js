@@ -4,6 +4,10 @@
    handles the rest: click (or Enter/Space) to open full-screen,
    click/Escape to close, and arrow navigation when the image's
    containing <div> has more than one .zoom image (wraps at both ends).
+
+   Add class="zoom-full" on top of "zoom" for images that should
+   open at full 90% viewport width with vertical scrolling, instead
+   of the default fit-on-screen behavior.
 --------------------------------------------------------------- */
 (function () {
   const overlay = document.createElement('div');
@@ -38,6 +42,8 @@
     const img = gallery[index];
     overlayImg.src = img.src;
     overlayImg.alt = img.alt || '';
+    overlayImg.classList.toggle('zoomjs-full', img.classList.contains('zoom-full'));
+    overlay.scrollTop = 0;
     if (gallery.length > 1) {
       counterEl.textContent = (index + 1) + ' / ' + gallery.length;
     }

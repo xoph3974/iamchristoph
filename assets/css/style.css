@@ -19,7 +19,7 @@
   --heading-font: 'Nunito', sans-serif;
   --body-font: 'Nunito', 'SF Pro Rounded', sans-serif;
   --max-width: 1280px;
-  --section-gap: 80px;
+  --section-gap: 124px;
   --radius: 12px;
 }
 
@@ -538,14 +538,30 @@ footer a { color: var(--blue); }
 
 /* --- Highlight box --- */
 .highlight-box {
+  position: relative;
   background: #e8f4ff;
   border-left: 8px solid var(--blue);
-  padding: 20px 24px;
+  padding: 20px 24px 20px 64px; /* room for the icon on the left */
   border-radius: 0 8px 8px 0;
   margin: 24px 0;
 }
 .highlight-box p { color: var(--text); margin: 0; }
 
+.highlight-box::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  width: 24px;
+  height: 24px;
+  background-color: var(--blue);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill-rule='evenodd' d='M1,12 A11,11 0 1,0 23,12 A11,11 0 1,0 1,12 Z M10.5,6.75 A1.5,1.5 0 1,0 13.5,6.75 A1.5,1.5 0 1,0 10.5,6.75 Z M10.75,10 H13.25 V17 H10.75 Z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill-rule='evenodd' d='M1,12 A11,11 0 1,0 23,12 A11,11 0 1,0 1,12 Z M10.5,6.75 A1.5,1.5 0 1,0 13.5,6.75 A1.5,1.5 0 1,0 10.5,6.75 Z M10.75,10 H13.25 V17 H10.75 Z'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
 
 /* --- Image layouts in case studies --- */
 img { max-width: 100%; }
@@ -665,6 +681,9 @@ img + .case-section {
 /* ---------------------------------------------------------------
    Zoom lightbox styles
    Drop this file in and link it, then add class="zoom" to any <img>.
+   Add class="zoom-full" as well on images that should open at full
+   90% viewport width with vertical scrolling, instead of the default
+   fit-on-screen behavior.
    Selectors are scoped to img.zoom / .zoomjs-* on purpose so they
    won't collide with existing rules elsewhere on the page.
 --------------------------------------------------------------- */
@@ -686,12 +705,13 @@ div.zoomjs-overlay {
   position: fixed;
   inset: 0;
   margin: 0;
-  padding: 0;
+  padding: 40px 0;
   border: none;
-  background: rgba(4, 14, 14, 0.9);
+  background: rgba(4, 14, 14, 0.94);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  overflow-y: auto;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.25s ease;
@@ -702,20 +722,28 @@ div.zoomjs-overlay.zoomjs-open {
   opacity: 1;
   visibility: visible;
 }
+
 img.zoomjs-overlay-img {
   box-sizing: border-box;
   width: 90vw;
   height: 90vh;
   object-fit: contain;
-  margin: 0;
+  margin: auto;
   padding: 0;
   border: none;
   border-radius: 4px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   transform: scale(0.96);
   transition: transform 0.25s ease;
 }
 div.zoomjs-overlay.zoomjs-open img.zoomjs-overlay-img {
   transform: scale(1);
+}
+
+/* Full-width, scrollable variant — only when the source <img> also had class="zoom-full" */
+img.zoomjs-overlay-img.zoomjs-full {
+  width: 90vw;
+  height: auto;
 }
 
 button.zoomjs-nav {
