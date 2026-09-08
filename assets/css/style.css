@@ -329,6 +329,19 @@ footer a { color: var(--blue); }
   font-size: 1rem;
 }
 .about-ctas { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+.about-ul {
+  list-style: none;
+}
+.about-ul li { 
+  padding: 8px 0; 
+  border-bottom: 1px solid var(--border); 
+  font-size: 0.95rem; 
+  color: var(--text);
+}
+.about-ul li:last-of-type { 
+  border-bottom: none;
+}
+
 
 
 /* --- Case Study / Project Pages --- */
@@ -428,6 +441,10 @@ footer a { color: var(--blue); }
   color: var(--blue);
   margin-bottom: 36px;
   border-bottom: 3px solid var(--blue);
+}
+.section-label.small {
+  font-size: 1.25rem;
+  letter-spacing: 0;
 }
 .case-section h2 {
   font-size: 1.6rem;
