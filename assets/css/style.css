@@ -39,7 +39,7 @@ body {
 img { max-width: 100%; height: auto; display: block; }
 a { color: var(--blue); text-decoration: none; }
 a:hover { text-decoration: underline; }
-
+.no-word-break { white-space: nowrap; }
 
 /* --- Typography --- */
 h1, h2, h3, h4, h5 {
@@ -383,7 +383,7 @@ footer a { color: var(--blue); }
   color: var(--blue);
 }
 .case-hero .subtitle {
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 300;
   color: var(--white);
   max-width: 600px;
