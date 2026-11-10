@@ -173,7 +173,11 @@ button.btn { border: none; }
 .full-width { min-width: 100%; justify-content: center; }
 
 /* --- Project Cards (Home) --- */
-.projects-section { padding: 0 32px var(--section-gap); }
+.projects-section { 
+  padding: 0 32px var(--section-gap);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
 .projects-grid {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -185,7 +189,7 @@ button.btn { border: none; }
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 64px;
-  margin: 0 32px;
+  margin: 0 auto;
   align-items: center;
   text-decoration: none;
   color: inherit;
@@ -661,7 +665,6 @@ img + .case-section {
     gap: 8px;
   }
   .project-card.reverse { direction: ltr; }
-  .project-card-body { padding: 24px !important; }
 
   .about-hero {
     grid-template-columns: 1fr;
